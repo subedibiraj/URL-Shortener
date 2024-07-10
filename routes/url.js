@@ -1,9 +1,10 @@
 const express = require('express');
-const {handleGetShortId} = require('../controller/url');
+const {handlePostShortId, handleGetShortId} = require('../controller/url');
 const router = express.Router();
 
 
 
-router.post('/', handleGetShortId);
+router.post('/', handlePostShortId);
+router.get('/:shortId', handleGetShortId);
 
 module.exports = router;
