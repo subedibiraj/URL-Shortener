@@ -10,8 +10,9 @@ async function handlePostShortId(req, res) {
     redirectUrl: body.url,
     visitHistory: [],
   });
-
-  return res.json({ id: shortId });
+  return res.render('home',{
+    id: shortId
+  });
 }
 
 async function handleGetShortId(req, res) {
@@ -26,7 +27,7 @@ async function handleGetShortId(req, res) {
 
 async function handleGetAnalytics(req,res){
     const result = await Url.findOne({
-        shortId: req.params.shortId
+        shortId: req.params.shortId 
     })
     return res.json({
         totalClicks: result.visitHistory.length,
@@ -34,8 +35,9 @@ async function handleGetAnalytics(req,res){
     })
 }
 
+
 module.exports = {
   handlePostShortId,
   handleGetShortId,
-  handleGetAnalytics
+  handleGetAnalytics,
 };
