@@ -1,9 +1,11 @@
 const express = require('express');
+const cookieParser = require('cookie-parser')
 const app = express();
 const urlRouter = require('./routes/url');
 const staticRouter = require('./routes/staticRouter');
 const userRouter = require('./routes/user');
 const {connectMongo} = require('./connection');
+const {restrictToLoggedinUserOnly,checkAuth} = require('./middlewares/auth')
 const path = require('path');
 const PORT = 8001;
 require('dotenv').config();
@@ -15,9 +17,10 @@ app.set('views', path.resolve('./views'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
 
-app.use('/url', urlRouter);
-app.use('/', staticRouter);
+app.use('/url', restrictToLoggedinUserOnly, urlRouter);
+app.use('/',checkAuth, staticRouter);
 app.use('/user',userRouter);
 
 

@@ -1,15 +1,23 @@
 const jwt = require('jsonwebtoken');
-const secret = 'process.env.JWT_KEY';
+require('dotenv').config();
 
-function setUser(user){
+const secret = process.env.JWT_KEY;
+
+function setUser(user){ 
     return jwt.sign({
         id: user._id,
         email: user.email
-    },secret);
+    },secret); 
 }
 
 function getUser(token){
-    return jwt.verify(token,secret);
+    if(!token) return null;
+    try{
+        return jwt.verify(token,secret);
+    }  catch(error){
+        return null;
+    }
+    
 }
 
 module.exports = {
