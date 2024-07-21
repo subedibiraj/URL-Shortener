@@ -20,9 +20,9 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
 app.use('/url', restrictToLoggedinUserOnly, urlRouter);
-app.use('/',checkAuth, staticRouter);
+app.use('/',checkAuth, staticRouter); 
 app.use('/user',userRouter);
-
+ 
 
 app.listen(PORT, ()=>{
     console.log(`Server started at port http://localhost:${PORT}`);
